@@ -1,0 +1,313 @@
+<chapter><title>制作第一份docbook文档</title>
+ 
+  <para>前面已经提到过，docbook主要分为SGML和XML两个版本，不论哪个版本，都称为Docbook DTD（Docbook Document Type Definition ，即Docbook文档类型定义）。在docbook DTD中，详细的描述了所有的标签。在这份文档中，我们使用的是XML版本的docbook DTD。从目前的状态来看，SGML版本使用的已经非常少。</para>
+  <para>docbook的入门是有一定门槛的，需要很多方面的配合，才能产出一份不错的文档。但一旦入门，并开始使用以后，对后期的文档制作效率和质量都是有极大提高的。要制作一份精美的docbook文档，需要如下的一些组件：</para>
+  <orderedlist>
+    <listitem><emphasis>XML文档</emphasis>
+      <para>首先，需要按照docbook DTD的规范要求，书写我们的xml文档。这是一件容易的事情，虽然有很多的标签，但每个标签的含义都非常明显，并且docbook的官方网站给出了所有标签的解释，以及它的父节点和子节点。下面的示例就是这个小节真实的样子：</para>
+        <screen>&lt;chapter&gt;&lt;title&gt;制作第⼀份docbook⽂档&lt;/title&gt;
+  &lt;para&gt;前面已经提到过... ...&lt;/para&gt;
+  &lt;para&gt;docbook的入门是有一定门槛的... ...&lt;/para&gt;</screen>
+        <para>docbook 5的标签请参考这个站点：<link xlink:href="https://tdg.docbook.org/tdg/5.0/docbook.html"></link></para>
+    </listitem>
+    <listitem><emphasis>XSL样式表</emphasis>
+      <para>有了docbook格式的xml文件之后，我们需要将这些xml转换成人们容易阅读的格式，如html或pdf格式。那不同标签所包含的内容用什么样的样式来显示呢？ 这就需要一套样式表。OASIS组织之外的另外的一家公司<emphasis>Sagehill Enterprises</emphasis>开发了一套完整的XSL样式表，用于将docbook格式xml文件转换为html、pdf、rtf或epub格式。</para>
+      <para>这份样式表的名叫<filename>docbook-xsl</filename>，目前版本号是1.79.2。如果产出的文档要达到我们想要的效果，我们需要对这个样式表进行参数调整及对相应样式进行再设计，这是一份需要点力气的工作。但是这个工作一旦完成，后面就可以长久享用了。我用的样式已经7、8年没变过了，最近只是把字体更换了一下。</para>
+      <para>样式表有关内容请参考：<link xlink:href="http://www.sagehill.net/docbookxsl/index.html"></link></para>
+    </listitem>
+    <listitem><emphasis>字体</emphasis>
+      <para>有几种类型的字体需要我们提前准备好主要包括sans、serif、monospace等。后面会有详细的介绍。</para>
+    </listitem>
+    <listitem><emphasis>处理程序</emphasis>
+      <para>有了docbook格式的文件、docbook-xsl样式表及字体，那还需要一些程序将这些东西生产出我们需要的html或pdf文件。主要包括<command>xsltproc</command>、<command>saxon</command>和<command>fop</command>等。</para>
+    </listitem>
+  </orderedlist>
+
+
+  
+
+  <sect1><title>基础环境搭建</title>
+    <para>就像前面所描述的，我们首先需要搭建一个基础的环境。这个环境的搭建比较简单，没有一些额外的安装步骤，只需要我们把相关的样式表、程序等下载并解压缩，然后放置在合适的目录中就可以了。下表是需要的组件清单：</para>
+    
+    <table frame="all"><title>software</title>
+    <tgroup cols="3" align="center">
+    <colspec colnum="1" colname="c1" colwidth="1*"/>
+    <colspec colnum="2" colname="c2" colwidth="4*"/>
+    <colspec colnum="3" colname="c3" colwidth="8*"/>    
+    <thead>
+      <row><?dbfo bgcolor="#EEEEEE" ?>
+        <entry align="center">No.</entry>
+        <entry align="center">Name</entry>
+        <entry align="center">Version</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>1</entry>
+        <entry>操作系统 OS</entry>
+        <entry>Debian Linux 12 Bookworm</entry>
+      </row>
+      <row>
+        <entry>2</entry>
+        <entry>docbook DTD</entry>
+        <entry>docbook-5.0</entry>
+      </row>
+      <row>
+        <entry>3</entry>
+        <entry>docbook-xsl</entry>
+        <entry>docbook-xsl-1.79.2</entry>
+      </row>
+      <row>
+        <entry>4</entry>
+        <entry>java</entry>
+        <entry>jre-8u301-linux-x64</entry>
+      </row>
+      
+      <row>
+        <entry>5</entry>
+        <entry>saxon</entry>
+        <entry>saxon6-5-5</entry>
+      </row>
+      
+      <row>
+        <entry>6</entry>
+        <entry>xalan</entry>
+        <entry>xalan-j_2_7_2-bin</entry>
+      </row>
+      <row>
+        <entry>7</entry>
+        <entry>fop</entry>
+        <entry>fop-2.6-bin</entry>
+      </row>
+      <row>
+        <entry>8</entry>
+        <entry>xsltproc</entry>
+        <entry>1.1.34</entry>
+      </row>   
+      <row>
+        <entry>9</entry>
+        <entry>fonts</entry>
+        <entry>思源字体</entry>
+      </row>   
+    </tbody>
+    </tgroup>
+  </table>  
+  <para>为了叙述方便，我们建立一个专门的目录<filename>docware</filename>来存放这些组件。</para>
+    <orderedlist>
+      <listitem><emphasis>docbook DTD</emphasis>
+        <para>下载地址：<link xlink:href="https://docbook.org/xml/5.0/docbook-5.0.zip"></link></para>
+        <para>这个DTD其实也可以不用下载，这里面就是docbook DTD。下载好解压缩以后，<filename>docbook.dtd</filename>文件在<filename>dtd</filename>的目录里。</para>
+      </listitem>
+      
+      <listitem><emphasis>docbook xsl</emphasis>
+        <para>下载地址：<link xlink:href="https://sourceforge.net/projects/docbook/files/docbook-xsl/1.79.1/docbook-xsl-1.79.1.tar.bz2/download"></link></para>
+        <para>上面的链接给出的版本是docbook-xsl-1.79.1的版本，截止这份文档完稿，docbook-xsl已经发展到了版本1.79.2。并且，项目寄存地址已经从sourceforge.net迁移到了github.com。如果需要最新版本的docbook-xsl，可以到github上去下载。地址是<link xlink:href="https://github.com/docbook"></link></para>
+      </listitem>
+      
+      <listitem><emphasis>java</emphasis>
+        <para>下载地址：<link xlink:href="https://www.java.com/zh-CN/download/"></link></para>
+        <para>这份文档中涉及到的程序基本上都是由java开发的，所以我们需要java。</para>        
+      </listitem>
+      
+      <listitem><emphasis>saxon</emphasis>
+        <para>下载地址：<link xlink:href="https://sourceforge.net/projects/saxon/files/saxon6/6.5.5/saxon6-5-5.zip/download"></link></para>
+        <para>Saxon是一个基于java的XSLT处理器，因其严格遵守XSLT标准而受到很多人的欢迎。saxon的作用是将我们docbook规范的文档，根据xsl样式表转换为我们需要的格式，比如html、fo<footnote><para>fo = Formatting Objects。格式化对象，简单来说，就是xsl处理程序通过格式对象（fo）来决定哪些元素被放置在页面的哪些位置。这是一个由w3c维护的xsl标准的一部分。https://www.w3.org/TR/2001/REC-xsl-20011015/slice6.html#fo-section</para></footnote>（pdf格式需要fo）等。</para>
+        <para>saxon版本很多，截至这份文档完稿，它的最新版本是10。关于saxon的更多信息可以参考它的官方网站：<link xlink:href="http://saxon.sourceforge.net/"></link>。在docbook-xsl的相关手册里， 对saxon6.5描述较多，所以我选择了这个比较稳定但似乎又年代久远的sanon6-5.5。</para>
+        <para>与saxon功能类似的、在docbook-xsl文档中提到的另一个软件是Apache软件基金会的xalan。在saxon的使用过程中似乎也没遇到什么大的问题，所以就没有使用。</para>
+      </listitem>
+      
+      <listitem><emphasis>xalan</emphasis>
+        <para>下载地址：<link xlink:href="hhttps://dlcdn.apache.org/xalan/xalan-j/binaries/xalan-j_2_7_2-bin.tar.gz"></link></para>
+        <para>xalan与saxon的作用类似。xalan是apache软件基金会的一个项目。xalan与saxon可以二选一。</para>
+      </listitem>
+      
+      <listitem><emphasis>fop</emphasis>
+        <para>下载地址：<link xlink:href="https://archive.apache.org/dist/xmlgraphics/fop/binaries/fop-2.4-bin.tar.gz"></link></para>
+        <para>fop是Apache软件基金会下的一个xml相关的项目，项目网站是：<link xlink:href="http://xmlgraphics.apache.org/fop/"></link>。fop的作用是将saxon生成的fo文件转换为pdf文件。截至这份文档完稿，它的最新版本是2.6。我选择了2.4版本，并没有使用最新版。</para>
+        <para>fop在我们需要的这些组件和软件里面，迭代是比较频繁的，特性增加了很多，易用性也提高了不少。记得最早使用fop的时候，在使用一些字体时，还需要将字体ttf等文件生成一份xml文件才行，而现在已经完全不需要了，只需要将字体复制到指定的目录，然后在配置文件<filename>fop.xconf</filename>里声明一下就可以了。如果字体文件规范，甚至都不需要声明。这个部分会在后面的配置部分介绍。</para>
+        
+      </listitem>
+      
+      <listitem><emphasis>xsltproc</emphasis>
+
+        <para>用于处理一些xsl的模板文件，在样式模板相关章节会用到。安装方法是直接使用debian的安装命令就可以了：</para>
+        <screen>apt-get install xsltproc</screen>        
+      </listitem>
+      
+      <listitem><emphasis>字体</emphasis>
+        
+        <para>字体是个有点大的问题，放在后面章节介绍。在这里我们需要三款字体，我使用的SourceHan（思源）字体族。我在发现思源字体之前有很多字体方面的问题困扰我。直到我发现了思源字体，很多问题才一扫而空。思源字体的背后是一个世界级的制作团队。主要受到adobe的赞助。而且它是开源的。它的官方网站是https://source.typekit.com/ ，一共有三款字体需要下载：source-han-sans，source-han-serif和source-han-mono。这三个文件都比较大，在国内的话可能要下载很长时间。我下载了差不多一个多星期，断了又下，下了又断的。</para>
+        <para>下载地址：<link xlink:href="https://github.com/adobe-fonts/"></link></para>
+        <para>下载好之后，把三个压缩文件解压，选取下面的三个字体：</para>
+        <orderedlist>
+          <listitem>source-han-sans-2.004R/SubsetOTF/CN/SourceHanSansCN-Regular.otf</listitem>
+          <listitem>source-han-serif-1.001R/SubsetOTF/CN/SourceHanSerifCN-Regular.otf</listitem>
+          <listitem>source-han-mono-1.002/Regular/OTC/SourceHanMonoSC-Regular.otf</listitem>
+        </orderedlist>
+        <para>把这三个字体保存到docware中的fonts目录中。</para>
+           
+      </listitem>
+    </orderedlist>
+    <tip><para>可能会有人问，对于这些组件版本的选择有什么讲究？其实也有一个大致的原则，首先不用最新版，其次是我重点参考了Debian 12和Ubuntu 20的版本库里相应的版本。保证这些组件所使用的版本都是经过稳定的系统测试过的。</para></tip>
+    <para>将这些组件下载到<filename>docware</filename>中，然后全部解压缩，基本的一个环境就算是搭建好了。后期还需要对<command>fop</command>的配置文件<filename>fop.xconf</filename>及XSL样式表进行很多的配置，到这里我们先把这些事情暂时一放。先写出第一份文档，然后再回过头来处理这些工作。</para>
+    <figure pgwide="0"><title>docware目录中的组件</title><graphic fileref="images/docware_dir.png" width="280px"/></figure>
+  </sect1>
+  
+  <sect1><title>书写docbook格式的xml文件</title>
+    <para>只要对docbook的标签有少许的了解，就可以开始书写基于docbook规范的文档，前面已经列举了两个例子。</para>
+    <para>我们就用下面这份简单的例子作为第一份docbook文档，把这份文档命名为<filename>firstbook.xml</filename></para>
+    
+      <programlisting linenumbering="numbered" language="myxml"><textobject><textdata  fileref="sources/firstbook.xml"/></textobject></programlisting>
+
+  
+    
+    <para>上面这段并不长的代码足以让我们演示docbook文档的结构。文档中只有如下几种标签：</para>
+
+    <orderedlist>
+      <listitem><emphasis>书 book</emphasis>
+        <para>这可能是DocBook文档中最常见的文档起点。也是我们用得最多，但也是输入次数很少的标签。“一本书”只需输入两次，一头一尾：&lt;book&gt; &lt;/book&gt;。</para>
+      </listitem>
+      
+      <listitem><emphasis>章 chapter</emphasis>
+        <para>book的子节点之一，“章”的根节点。与chapter节点同级的还有preface（序言）和appendix（附录）。</para>
+      </listitem>
+      
+      <listitem><emphasis>节 sect*</emphasis>
+        <para>sect1是“小节”的根节点，“小节”一共有5个级别，一级套一级，1套2，2套3...... sect1、sect2、sect3、sect4和sect5。如果不喜欢这5个标签，也可以使用section标签递归嵌套。</para>
+      </listitem>
+      
+      <listitem><emphasis>段落</emphasis>
+        <para>para就是paragraph的缩写。应该是用得最多的标签了吧。</para>
+      </listitem>
+      
+      <listitem><emphasis>标题</emphasis>
+        <para>title是在文档中应用非常广泛的标签，不仅是book,chapter,sect*等，在后面还会用到的表格、插图等都可以有一个标题。</para>
+      </listitem>
+    </orderedlist>
+    <para>如果没有什么特别的要求，这样一份单纯文字性的“书”就算准备好了。接下来，我们就可以将这个文件转换为我们需要的格式。</para>
+
+  </sect1>
+  
+  <sect1><title>生成我们需要的文件</title>
+    <para>将<filename>firstbook.xml</filename>文件转换为我们需要的格式，如html或者pdf，需要相应的docbook-xsl样式表及saxon和fop程序。</para>
+    <para>样式表目录<filename>docbook-xsl-1.79.1</filename>下有很多目录和文件，下面的表格列出了一些会常用的：</para>
+    <table frame="all"><title>样式表目录及作用</title>
+    <tgroup cols="3" align="center">
+    <colspec colnum="1" colname="c1" colwidth="1*"/>
+    <colspec colnum="2" colname="c2" colwidth="4*"/>
+    <colspec colnum="3" colname="c3" colwidth="8*"/>    
+    <thead>
+      <row><?dbfo bgcolor="#EEEEEE" ?>
+        <entry align="center">No.</entry>
+        <entry align="center">目录名</entry>
+        <entry align="center">用途</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>1</entry>
+        <entry>fo</entry>
+        <entry>将xml文件转换为fo文件，然后再将fo文件转换为pdf格式的文件</entry>
+      </row>
+      <row>
+        <entry>2</entry>
+        <entry>html</entry>
+        <entry>将xml文件转换为html文件</entry>
+      </row>
+      <row>
+        <entry>3</entry>
+        <entry>epub</entry>
+        <entry>将xml文件转换为epub（电子书）文件</entry>
+      </row>
+      <row>
+        <entry>4</entry>
+        <entry>htmlhelp</entry>
+        <entry>将xml文件转换为htmlhelp文件</entry>
+      </row>
+      <row>
+        <entry>5</entry>
+        <entry>slides</entry>
+        <entry>制作幻灯片（类似ppt）的样式表</entry>
+      </row>
+
+    </tbody>
+    </tgroup>
+  </table>  
+    
+    <sect2><title>转换为html文件</title>
+      <para>转换为html文件比较简单，如果只是转换为可以在线阅读的文档，在样式方面没有特别需求的话，使用saxon，按照下面的命令执行就可以了：</para>
+      <orderedlist>
+        <listitem><emphasis>转换为单页html</emphasis>
+          <para>将<filename>firstbook.xml</filename>转换为单页html文件，使用<filename>docbook-xsl-1.79.1/html/docbook.xsl</filename>文件，命令如下：</para>
+          <screen>docware/jre-8u301-linux-x64/jre1.8.0_301/bin/java -cp \
+          docware/saxon6-5-5/saxon.jar:\
+          docware/docbook-xsl-1.79.1/extensions/saxon65.jar:\
+          com.icl.saxon.StyleSheet -o firstbook.html firstbook.xml \
+          docware/docbook-xsl-1.79.1/html/docbook.xsl</screen>
+          <para>命令执行结束，会生成<filename>firstbook.html</filename>文件。</para>
+        </listitem>
+        <listitem><emphasis>转换为多页html</emphasis>
+          <para>转换为多个html文件，使用docbook-xsl-1.79.1/html/chunk.xsl文件，命令如下：</para>
+          <screen>docware/jre-8u301-linux-x64/jre1.8.0_301/bin/java -cp \
+          docware/saxon6-5-5/saxon.jar:\
+          docware/docbook-xsl-1.79.1/extensions/saxon65.jar:\
+          com.icl.saxon.StyleSheet firstbook.xml \
+          docware/docbook-xsl-1.79.1/html/chunk.xsl</screen>
+          <para>命令执行结束，会生成以<filename>index.html</filename>为索引的一族html文件。</para>
+        </listitem>
+        
+      </orderedlist>
+    </sect2>
+    <sect2><title>转换为pdf文件</title>
+      <para>如果html文件适合在线浏览的话，那对于有打印需求的人来说，pdf可能是最好的选择。从xml转换到pdf可能要麻烦一点，需要先使用saxon将xml文件转换为fo文件，然后再使用fop将fo文件转换为pdf文件。为了能得到显示良好的pdf文件，在转换之前需要先做两件准备工作。一是配置<filename>fop.conf</filename>文件，二是对针对fo的docbook-xsl做适当的调整。</para>
+      <sect3><title>配置fop.conf文件</title>
+        <para>配置fop.conf的主要目的就是能让合适的字体加载到pdf文件中，如果找不到合适的字体，pdf文件可能会显示乱码。在目录<filename>fop-2.4-bin/fop/conf/</filename>中，有一个<filename>fop.xconf</filename>文件，将这份文件复制一份，并将复制后的文件重新命名为<filename>fop.conf</filename>。并对这个文件做两处修改：</para>
+        <orderedlist>
+          <listitem><para>在&lt;base&gt;.&lt;/base&gt;下添加一行，如下：</para>
+            <screen>&lt;base&gt;.&lt;/base&gt;
+&lt;font-base&gt;/usr/share/fonts&lt;/font-base&gt;</screen>
+            <para>这一行的意义是让fop可以到这个目录里去寻找字体。需要根据字体的具体目录来设定。</para>
+          </listitem>
+          <listitem><para>在&lt;fonts&gt;&lt;/fonts&gt;节点中添加如下的字体信息：</para>
+            <screen><textobject><textdata  fileref="sources/fop.font.conf"/></textobject></screen>
+          </listitem>
+        </orderedlist>
+        <para>经过这样简单的配置，字体就在fop中配置好了。其中的auto-detect是自动检测系统中安装的字体。后面三个font节点配置的就是前面我们下载的三个字体。</para>
+        <para>fop详细的配置信息请参考：https://xmlgraphics.apache.org/fop/2.4/configuration.html</para>
+      </sect3>
+
+      <sect3><title>设置fop脚本</title>
+        <para>fop设置的另外一个工作，就是需要在<filename>fop-2.4-bin/fop/fop</filename>脚本中添加classpath。</para>
+        <screen><textobject><textdata  fileref="sources/fop.sh.example"/></textobject></screen>
+        <para>将上面的这段代码加在<filename>fop-2.4-bin/fop/fop</filename>的前面。</para>
+      </sect3>
+
+      <sect3><title>docbook-xsl参数调整</title>
+        <para>关于样式表参数的调整，主要是调整<filename>docbook-xsl-1.79.1/fo/param.xsl</filename>里的一些内容</para>
+        <programlisting linenumbering="numbered" language="xml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/xsl-param.xsl"/></textobject></programlisting>
+        <para>上面的这段代码主要是对语言、版面大小、字体和行间距进行了调整。</para>
+      </sect3>
+      
+      <sect3><title>生成pdf文件</title>
+        <para><filename>fop.conf</filename>和样式表配置好以后，就可以生成pdf格式的文件了。分为两步：</para>
+        <orderedlist>
+          <listitem><emphasis>生成fo文件</emphasis>
+            <para>第一步首先是要生成fo文件，与生成单页html文件类似，使用<command>saxon</command>，只需要把样式表<filename>html/docbook.xsl</filename>更换为<filename>fo/docbook.xsl</filename>：</para>
+            <screen>docware/jre-8u301-linux-x64/jre1.8.0_301/bin/java -cp \
+          docware/saxon6-5-5/saxon.jar:\
+          docware/docbook-xsl-1.79.1/extensions/saxon65.jar:\
+          com.icl.saxon.StyleSheet -o firstbook.fo firstbook.xml \
+          docware/docbook-xsl-1.79.1/fo/docbook.xsl</screen>
+          </listitem>
+          <listitem><emphasis>将fo文件转换为pdf</emphasis>
+            <para>然后使用<command>fop</command>程序将fo文件转换为pdf文件：</para>
+            <screen>fop-2.4-bin/fop/fop firstbook.fo firstbook.pdf -c fop-2.4-bin/fop/conf/fop.conf</screen>
+          </listitem>
+        </orderedlist>
+                
+      </sect3>
+    </sect2> 
+  </sect1>
+  
+ 
+</chapter>

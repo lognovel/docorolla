@@ -1,0 +1,14 @@
+<colophon><title>结束语</title>
+  <para>docbook标签丰富，样式也非常灵活。同时也带来了一定的学习成本，但一旦掌握、并定义了自己的样式表以后，在文档的书写、维护、团队协作方面会带来质的飞跃。</para>
+  <para>docbook的作用不仅仅用在文档写作上，国外很多公司还直接用它来做宣传册、技术白皮书等。</para>
+  <para>docbook经典的书籍有两本，《DocBook Xsl: The Complete Guide (4th Edition)》和《DocBook 5: The Definitive Guide》</para>
+  <mediaobject><imageobject> <imagedata fileref="images/book.svg"/></imageobject></mediaobject>
+  <para>可以在amazon.com上买到。另外，这两本书都有在线版本，前面已经提到过：</para>
+      <para>docbook 5：<link xlink:href="https://tdg.docbook.org/tdg/5.0/docbook.html"></link></para>
+      <para>docbook xsl：<link xlink:href="http://www.sagehill.net/docbookxsl/index.html"></link></para>
+  
+  <para>在使用这份文档过程中如果您有建议可以通过<email>484299 @ qq .com</email>和我们联系。每一点意见都弥足珍贵。也期待一起分享更多的关于docbook方面的知识。</para><para>docbook是非常好的文档系统。期待更多的人使用，让文档成为一种艺术。</para>
+  <para>
+
+  </para>
+</colophon>

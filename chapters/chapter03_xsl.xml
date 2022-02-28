@@ -1,0 +1,66 @@
+<chapter><title>样式定义</title>
+  <para>最后生成的文件在版式和样式上想要达到自己想要的结果，就必须修改样式表。关于样式表的修改主要包含两个大的部分：一是修改现有的一些配置参数，如字体、字体大小等；二是直接修改某些板块的模板。修改参数相对简单，修改模板就需要做更多的工作。基本上所有的信息都在下面这两个站点里：</para>
+  <para><link xlink:href="http://www.sagehill.net/docbookxsl/index.html">docbook xsl 参考手册</link></para>
+  <para><link xlink:href="http://docbook.sourceforge.net/release/xsl/current/doc/index.html">参数修改参考</link></para>
+  <para>本章仅以fo（pdf）样式表的修改为例做简要说明。</para>
+  <sect1><title>参数设置部分</title>
+    <para>fo样式表的所有参数的设定都在文件<filename>docbook-xsl-1.79.1/fo/param.xsl</filename>里面。大概有个差不多1000多行的代码。在前面已经对语言、字体的设置做了调整，在这里我们进一步说明一下，并再列举几个简单的例子，说明参数是如何调整的。</para>
+    <orderedlist>
+      
+      <listitem><emphasis>language</emphasis>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/xsl-param_lang.xsl"/></textobject></programlisting>
+        <para>这是对使用语言的设置，在样式表目录里有一个<filename>docbook-xsl-1.79.1/common/zh_cn.xml</filename>语言包文件，这是中文的语言包。这个文件里的内容都是预先设置好的固定文本。设置什么样的语言，处理程序就会找哪个语言包。docbook-xsl对中文的支持非常友好。</para>
+      </listitem>
+      
+      <listitem><emphasis>font</emphasis>
+        <para>在样式表中主要有三类字体需要设置，如下所示：</para>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/xsl-param_fonts.xsl"/></textobject></programlisting>
+        <para>这三种字体分别描述如下：</para>
+        <orderedlist>
+          <listitem><para>body.font.family：就是文档正文部分所使用的字体，通常情况下正文一般使用衬线（serif）字体，在汉字里一般是宋体。在这里设置了两个选项，除了我们在<filename>fop.conf</filename>里设置的“Source Han Serif CN”之外，还增加了一个serif的选项。它的作用是保证这份设置文件在其他没有SourceHan字体的电脑里也可以正常的工作，可以找到替代的字体。因为每台电脑一定有一款字体会被命名为serif。</para></listitem>
+          <listitem><para>title.font.family：就是各种标题部分所使用的字体，通常情况下标题一般使用非衬线（sans-serif）字体，在汉字里一般是黑体。同样，在“值”位置，有两个字体，除了“Source Han Sans CN”之外，还有sans，它的作用与body.font.family里的设置是一样的。</para></listitem>
+          <listitem><para>monospace.font.family：就是等宽字体，等宽字体一般用在程序代码、屏幕输出、inline等元素里。平时我们的终端命令行就是使用的等宽字体。同样，也是有两款字体。</para></listitem>
+        </orderedlist>
+      </listitem>
+      
+      <listitem><emphasis>line height</emphasis>
+        <para>设置正文的行高，这个可以根据自己的喜好设定。 1.7的意思是字体大小的1.7倍。</para>      
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/xsl-param_lineheight.xsl"/></textobject></programlisting>
+
+      </listitem>
+      
+      <listitem><emphasis>paper size</emphasis>
+        <para>设定文档打印时版面的大小，有A0，A1，A3，A4... ....40几种尺寸可供选择。A4大概是平时用得最多的。</para>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/xsl-param_papersize.xsl"/></textobject></programlisting>
+      </listitem>
+    
+      <listitem><emphasis>monospace.verbatim.properties</emphasis>
+        <para>monospace.verbatim.properties是用于设置使用等宽字体文档元素的样式，例如前面提到的screen等。</para>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/xsl-param_mono.xsl"/></textobject></programlisting>
+        <para>在上面的设置中，我们定义了文本的对齐方式、字号的大小、子的粗细、背景颜色及边界线的样式。在样式表中，还有很多类似这样的设置，例如admonition.properties 、 revhistory.table.properties等，都是依样画葫芦。</para>
+      </listitem>
+    </orderedlist>
+  </sect1>
+  
+  <sect1><title>样式模板</title>
+    <para>样式表的设定除了前面的参数修改以外，还有一些需要修改模板，比如“titlepage”这个部分，在标题页上显示哪些内容、用什么样的样式来显示，都需要重新定义或修改相应的模板，而非仅仅调整几个参数。在这个部分我们仅介绍titlepage的定义方法。</para>
+    <para>titlepage，就是标题页。比如book的titlepage，就像这本书，它有书的“右页（recto，可以向左翻）”，我只让它显示标题、副标题及作者；还有“左页（verso）”，这上面显示的信息要多一些，还包括版本信息、摘要、版权信息等。要定义这个模板，需要三步：</para>
+    <orderedlist>
+      <listitem><emphasis>修改 titlepage.templates.xml</emphasis>
+        <para><filename>titlepage.templates.xml</filename>就是titlepage的模板文件，这个文件在目录<filename>docbook-xsl-1.79.1/fo</filename>下面。首先我们需要对里面的“book”部分进行修改，修改成如下的样子：</para>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/titlepage.template.example.xml"/></textobject></programlisting>
+        <para>上面的代码虽然有点长，但很容易阅读，基本就说了两个事：在recto或verso页上显示哪些内容、用什么样的样式显示。</para>
+      </listitem>
+      <listitem><emphasis>生成模板文件</emphasis>
+        <para>模板文件的生成需要刚才修改过的<filename>titlepage.templates.xml</filename>文件，及<filename>docbook-xsl-1.79.1/template/titlepage.xsl</filename>文件，还需要<command>xsltproc</command>这个命令。先将<filename>titlpage.templates.xsl</filename>做备份保存，然后执行如下的命令：</para>
+        <screen>xsltproc --output titlepage.templates.xsl template/titlepage.xsl titlepage.templates.xml</screen>
+        <para>这样，新的<filename>titlepage.templates.xsl</filename>文件就生成了。</para>
+        <para>我总感觉这里有点奇怪，用xsl生成xsl？ 但docbook官方就是这么定义的。</para>
+        <para>除了titlepage外，inline和pagesetup也需要定义模板，但不用修改xml文件了，可以参考<filename>fo/inline.xsl<filename>和</filename>fo/pagesetup.xsl</filename>文件和前面提到的相关站点。</para>
+      </listitem>
+    </orderedlist>
+   
+  </sect1>
+
+
+</chapter>

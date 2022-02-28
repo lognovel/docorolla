@@ -1,0 +1,46 @@
+<preface><title>写在前面</title>
+  <para>在接触到docbook之前，写一些计算机技术相关的一些文档，对我来说是件很辛苦的事情。</para>
+  <itemizedlist>
+    <listitem>该用什么样的一些样式展示不同的一些文档元素？如一些代码、或者系统命令等。</listitem>
+    <listitem>如何保证同样的文档元素总是保持一样的显示风格？</listitem>
+    <listitem>如何进行版式的一些设计？用word来排版对我来说实在太痛苦。</listitem>
+    <listitem>如何让文档能够同时生成在线阅读的版本和可以打印的版本？</listitem>
+    <listitem>如何完成多人协作书写，又同时保证样式的完全一致？</listitem>
+  </itemizedlist>
+  <para>还有就是诸如如何进行版本控制等，因为诸多方面的一些困扰，平时也就非常留意其他人的文档在这些方面是如何处理的。在阅读国外的一些开源技术文档时，发现他们的文档从样式、排版及不同文件的发布（html、pdf及epub等）都非常精美，感觉他们是用某种出版系统自动进行处理的，而非人工制作。</para>
+  <para>按图索骥，一个称之为<emphasis>docbook</emphasis>的东西走进了我的视野。发现他们都在使用这套东西进行文档的书写、排版、管理和发行。Debian，OpenSuse，Gnome、openstack等很多开源组织都在使用。很多商业公司如IBM、Redhat，Ubuntu，Oracle等也在使用。</para>
+  <para><emphasis>docbook</emphasis>引起了我浓厚的兴趣。于是决定把一些技术性的文档也全部采用docbook来书写、排版和发行。通过搜索各方面的资料，发现这并不是一件容易的事情。一是这方面的中文资料非常少，二是这方面的英文资料也非常分散。但是，看到那些版式疏朗、眉目清晰、章节分明的精美文档，还是决定一试。于是，就有了这份小册子。</para>
+
+
+
+
+  <sect1><title>docbook简介</title>
+    <para>通俗点讲，docbook其实算是一种标记语言，与html有点类似，就是使用一些标记，把文档整理、组织在一起，如下所示：</para>
+    <screen>&lt;book&gt;&lt;title&gt;文档的艺术&lt;/title&gt;  
+    &lt;subtitle&gt;docbook简要参考⼿册&lt;标签、样式及处理程序&gt;&lt;/subtitle&gt;
+         ... ...</screen>
+    <para>当这些文字被一些固定的标签整理和组织以后，在计算机里就很容易根据不同的标签做不同的处理。其中比较常见的一种应用就是对不同标签的内容按照相应的样式进行显示。docbook，本质上就是一组标签的集合，而且是专门针对制作“书籍”的标签集合。</para>
+    <para>docbook实际上是一种规范、一种标准，在这种规范或标准里规定了有哪些标签可以使用。就像html规范里，有&lt;head&gt;、&lt;div&gt;、&lt;body&gt;等标签一样。docbook主要分为SGML和XML两个版本，目前由OASIS<footnote><para>OASIS：Organization for the Advancement of Structured Information Standards，结构化信息标准促进组织，是一个推进电子商务标准的发展、融合与采纳的非盈利性国际化组织。自1993年成立开始，OASIS已经发展成为了由来自100多个国家的600多家组织、企业，参与人数超过5000人的国际化组织。</para></footnote>的docbook技术委员会来维护。</para>
+  </sect1>
+  <sect1><title>docbook历史</title>
+    <para>docbook肇始于1991年，主要分为三个阶段。</para>
+    <orderedlist>
+      <listitem><emphasis>HaL和O'Reilly阶段</emphasis>
+        <para>docBook是由HaL计算机系统公司和O'Reilly公司设计和实现的。它最主要的设计目的就是为了保存一些unix文档转换、排版后的结果，这样这些unix文档就能互相交换。O'Reilly公司创建了专门的“计算机文档制作论坛”（即后来的Davenport集团）来修订和维护docbook。在1994年的时候Davenport成文docbook的主要维护者，同年，docbook version 1.2.2发布。</para>
+      </listitem>
+      <listitem><emphasis>Davenport阶段</emphasis>
+        <para>在Davenport集团的赞助下，docbook得到了更广泛的应用，作为当时最大的用户Novell和Sun公司对docbook的设计有了很大的影响。1997年1月时，docbook的第3个版本发布。</para><para>后来，由于docbook在XML标准方面的一些原因，docbook的赞助者期待能建立一个新的机构来接管docbook。于是，在1998年7月，OASIS DocBook Technical Committee正式成立。 </para>
+      </listitem>
+      <listitem><emphasis>OASIS 阶段</emphasis>
+        <para>被OASIS接管以后，也就意味这docbook成为了一个文档、书籍制作方面事实上的标准。由于一开始docbook是用SGML语言实现的，在OASIS的推动下，顺利地推出了XML版本，并且发展良好。这份手册就是遵守docbook的XML规范来书写的。</para>
+      </listitem>  
+    </orderedlist>
+    
+    <para>其实，在整个docbook的发展过程中，一个绕不开的名字是<emphasis>O'Reilly</emphasis>。这家公司为docbook的发展做出了非常突出的贡献。从最开始创建docbook，到目前为止，还在积极地参与很多docbook方面的工作，docbook最核心的书籍《DocBook 5: The Definitive Guide》也是由O'Reilly出版的。</para><para>我自己购买的大部分计算机专业的书籍很大一部分都是<emphasis>O'Reilly</emphasis>出版的。O'Reilly的计算机书籍无论是在内容、版式还是装帧等方面，都是非常棒的。其实从它所出版的书籍里也能看出，docbook深受其影响。</para>
+   
+  </sect1>
+
+
+
+
+</preface>

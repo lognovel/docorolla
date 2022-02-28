@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE book [
+    <!ENTITY info SYSTEM "info.xml">
+    <!ENTITY preface SYSTEM "preface.xml">
+     
+    <!ENTITY chapter01_beginning SYSTEM "chapters/chapter01_beginning.xml">
+    <!ENTITY chapter02_xml SYSTEM "chapters/chapter02_xml.xml">
+    <!ENTITY chapter03_xsl SYSTEM "chapters/chapter03_xsl.xml">
+    <!ENTITY chapter04_fonts SYSTEM "chapters/chapter04_fonts.xml">
+    
+    <!ENTITY colophon SYSTEM "chapters/colophon.xml">
+]>
+
+<book xmlns:xlink='http://www.w3.org/1999/xlink' 
+      xmlns="http://docbook.org/ns/docbook" 
+      xml:lang="zh_cn" 
+      version="5.0">
+
+<title>⽂档的艺术</title>
+<subtitle>docbook简要参考⼿册（标签、样式及处理程序）</subtitle>
+&info;
+&preface;
+
+&chapter01_beginning;
+&chapter02_xml;
+&chapter03_xsl;
+&chapter04_fonts;
+
+&colophon;
+</book>

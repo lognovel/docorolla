@@ -1,0 +1,234 @@
+<chapter><title>制作更完整的docbook文档</title>
+
+  <para>前面通过<filename>firstbook.xml</filename>的例子展示了一份docbook xml文档基本的样子。并将其转换为了html和pdf文件。接下来需要我们做更多细致的工作，使文档更加完善、完美。</para>
+  <sect1><title>文档声明</title>
+  <para>一份XML文档的声明部分通常由可选的XML声明、可选的DTD声明（可能还会包括一些内部的实体元素定义）和文档根元素组成。</para>
+    <orderedlist>
+      <listitem><emphasis>xml文档声明</emphasis>
+        <para>XML文档通常以XML声明开始，通常包含版本、编码格式等，例如：</para>
+        <screen>&lt;?xml version="1.0" encoding="utf-8"?&gt;</screen>
+        <para>版本和编码格式会告诉处理程序采用什么的方式来处理我们的xml文本。一般情况下，xml的处理程序默认version是1.0，encoding是uft-8或utf-16，在这种情况下，我们可以不用写xml文档声明。如果使用xml1.1格式或其他的编码格式那就必须声明。</para>
+        <para>无论什么版本和编码，建议保留完整的声明。这是一种良好的习惯。</para>
+      </listitem>
+      
+      <listitem><emphasis>docbook DTD文档声明</emphasis>
+        <para>docbook DTD是docbook xml的文档声明，这也不是必须的。但，历史的原因，几乎所有的docbook xml文件都包含了这个部分。docbook DTD部分可以清晰地告诉我们使用了哪个版本的DTD及文档的根元素是什么，这个声明紧随xml声明之后，如下的样子：</para>
+        <screen>&lt;?xml version='1.0' encoding="utf-8"?&gt;
+&lt;!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+                   "http://www.oasis-open.org/docbook/xml/5.0/docbook.dtd"&gt;</screen>
+        <para>上面的声明告诉我们，文档的根元素是book，使用了5.0版本的dtd。在某些程序处理xml文档时，需要验证相关标签是否存在或者是否符合规范，那这个docbook.dtd就会被读取。如果我们已经下载这个docbook.dtd到我们的电脑里，也可以用将它指向本的的文件，如下：</para>          
+        <screen>&lt;?xml version='1.0' encoding="utf-8"?&gt;
+&lt;!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+                   "/usr/local/docware/docbook-5.0/dtd/docbook.dtd"&gt;</screen> 
+        <tip>上面的例子根元素是book，另外常用的两个标签是article和set。article是一篇文章，篇幅上比book要小。set是book的合集，篇幅上更大。</tip>           
+      </listitem>
+      
+      <listitem><emphasis>根元素</emphasis>
+        <para>根元素紧跟在文档类型声明之后，和docbook DTD的声明类似，这个部分也是可选的。但有时候很多程序会调用这些信息，而且docbook从版本5以后直接使用了一些xlink里的一些特性，所以建议保留这些内容：</para>
+        <screen>&lt;?xml version='1.0' encoding="utf-8"?&gt;
+&lt;!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+                   "/usr/local/docware/docbook-5.0/dtd/docbook.dtd"&gt;
+                   
+&lt;book xmlns:xlink='http://www.w3.org/1999/xlink' 
+      xmlns="http://docbook.org/ns/docbook" 
+      xml:lang="zh_cn" 
+      version="5.0"&gt;  </screen> 
+        
+      </listitem>
+    </orderedlist>
+    
+    <para>这些看似废话一样的声明其实是大有用处的，主要是一些程序会从这些声明里面读取很多信息，以用于文档的处理。所以，建议将这部分固定为自己的docbook xml文件的“头”部分。那么前面的<filename>firstbook.xml</filename>就写成如下非常正规的样子：</para>
+    <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/firstbook_2.xml"/></textobject></programlisting>
+ 
+  </sect1>
+  
+  
+  <sect1><title>将文档物理分割</title>
+    <para>前面所展示的<filename>firstbook.xml</filename>这个文件只是一个架构，如果所有的内容全部写好后，是非常长的一个文件。一个人编写非常大的一个文件是非常恼人的事情，更不用说多人来共同创作了。所以我们需要将文档进行分割，通常情况下，会把一个chapter或一个section放在一个文件里面，例如，<filename>firstbook.xml</filename>，我们把它分为四章，这样就变成了5个文件，一个<filename>firstbook.xml</filename>和四个“章文件”。下面是我们这份手册的目录树。</para>
+    <screen>chunxin@CC$ tree firstbook/
+firstbook/
+├── chapters
+│   ├── chapter01_beginning.xml
+│   ├── chapter02_xml.xml
+│   ├── chapter03_xsl.xml
+│   └── chapter04_fonts.xml
+├── firstbook.xml
+├── colophon.xml
+├── info.xml
+└── preface.xml</screen>
+    <para>要完成这种分割，需要做两件事，在<filename>firstbook.xml</filename>定义各个章节文件，然后单独完成每个章节的编撰。在目录树中，还有几个其他的文件：<filename>info.xml</filename>、<filename>preface.xml</filename>和<filename>colophon.xml</filename>，他们分别是关于“书”的一些信息、“序言”和“后记”。</para>
+    <orderedlist>
+      <listitem><emphasis>各个文件的定义</emphasis>
+        <para>这个部分是在前面我们描述的“头”部分完成的，在根元素之前，在DTD声明之后。定义好之后，在适当的位置引用他们，那么我们的<filename>firstbook.xml</filename>l真实的样子就诞生了，如下的样子：</para>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/firstbook_3.xml"/></textobject></programlisting>
+      </listitem>
+      
+      <listitem><emphasis>单独书写各个章节</emphasis>
+        <para>分割好以后就有点文档工程的味道了。接下来就是完成各个章节的撰写。章节的撰写相对<filename>firstbook.xml</filename>来讲就相对简单里，不需要那些定义和声明，只要按照标准的docbook规范来书写就可以了。在这里以第一章为例来说明，如下：</para>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/chapter01.xml"/></textobject></programlisting>
+        <para>其他的章节也是按照这样的方式来撰写。</para>
+      </listitem>
+      
+      <listitem><emphasis>info.xml</emphasis>
+        <para>这个文件里面包含了“书”的很多信息，主要是作者、版本信息、发行信息、出版日期等。</para>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/info.example.xml"/></textobject></programlisting>
+        <para>这个例子里只是展示了一部分，关于书的信息（标签）还有很多，可以根据自己的需求添加或减少。</para>
+      </listitem>
+      
+      <listitem><emphasis>preface.xml和colophon.xml</emphasis>
+        <para>这两个文件是一本“书”的序言和后记。一般情况下也不是必须的。可以把喜欢的一些“引子”之类的东西写在序言里，把后续要做的或一些花絮写在后记里。</para>
+        <para>在book里，可以把preface和colophon标签看成和chapter是一样的，preface.xml大致如下的样子：</para>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/preface.example.xml"/></textobject></programlisting>
+        <para>colophon.xml大致如下的样子：</para>
+        <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/colophon.example.xml"/></textobject></programlisting>
+      </listitem>
+      
+      
+    </orderedlist>
+  </sect1>
+  
+  <sect1><title>认识更多的docbook标签</title>
+    <sect2><title>关于“文档种类”的标签</title>
+      <para>从我们平时使用的角度来看，可以把docbook的文档种类分为三个部分，article、book和set。</para>
+      <orderedlist>
+        <listitem><emphasis>article</emphasis>
+          <para>article从篇幅上来说一般会比book要小，写一篇小的文章，这种类型比较合适。article标签可以说是和chapter标签是平级的。前面描述的xml头文件和物理分割特性同样适用于article。与book不同的是，article由section（sect1）组成。</para>
+        </listitem>
+      
+        <listitem><emphasis>book</emphasis>
+          <para>book就是“书”，前面的<filename>firstbook.xml</filename>就是典型的book。它是由章节组成。</para>
+        </listitem>
+      
+        <listitem><emphasis>set</emphasis>
+          <para>set是书的合集，可以把多本书放在一起，就像book把多个chapter放在一起一样。</para>
+        </listitem>
+      </orderedlist>
+      <para>除了set、book、article之外，还有很多这种逻辑上的文档组织类标签，包括：part、appendix、glossary、refentry等。</para>
+
+    </sect2>
+    
+    <sect2><title>认识更多的“文档元素”</title>
+
+        <sect3><title>list</title>
+          <para>list类的文档元素在docbook里一共有8种，这里我们只讲两种，其余的请参考tdg文档。</para>
+          <orderedlist>
+          
+            <listitem><para>itemizedlist，没有编号，每个条目用小圆点标注的列表，它的子节点是listitem，比如下面的例子</para>
+              <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/itemizedlist_example.xml"/></textobject></programlisting>
+              <para>上面这个例子就是这份文档序言里的内容。</para>
+              
+            </listitem>
+          
+            <listitem><para>orderedlist，这是编号的list，它的子节点是listitem，比如下面的例子</para>
+              <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/orderedlist_example.xml"/></textobject></programlisting>
+              <para>显示出的效果如下：</para>
+              <sidebar>
+              <orderedlist>
+                <listitem>该用什么样的一些样式展示不同的一些文档元素？如一些代码、或者系统命令等。</listitem>
+                <listitem>如何保证同样的文档元素总是保持一样的显示风格？</listitem>
+                <listitem>如何进行版式的一些设计？用word来排版对我来说实在太痛苦。</listitem>
+                <listitem>如何让文档能够同时生成在线阅读的版本和可以打印的版本？</listitem>
+                <listitem>如何完成多人协作书写，又同时保证样式的完全一致？</listitem>
+              </orderedlist>
+              </sidebar>
+            </listitem>        
+            
+            
+          </orderedlist>
+        </sect3>
+      
+        <sect3><title>inline</title>
+          <para>可以称之为内联元素。这一类的标签非常多，主要是有一些特殊的技术性内容会出现在正文的内容里，但它的字体可能要发生一些变化，以引起读者的注意。或者通过字体或大小上的一些固定样式，在读者看到时，一下就可以分辨出它是什么类的内容。比如一些系统的命令、文件名、命令选项及参数等。</para>
+          <para>我们以系统命令<command>iptables-save</command>来举例说明，我们需要用这个命令将地址转换表（nat）保存到一份文件中，在xml文件中输入如下的文字：</para>
+          <screen>&lt;command&gt;iptables-save&lt;/command&gt; &lt;option&gt;-t&lt;/option&gt; &lt;parameter&gt;nat&lt;/parameter&gt; 
+                                 &lt;option&gt;-f&lt;/option&gt; &lt;filename&gt;nat.rules&lt;/filename&gt;</screen>
+          <para>那么就会得到如下的显示样式：</para>                      
+          <sidebar><screen><command>iptables-save</command> <option>-t</option> <parameter>nat</parameter> <option>-f</option> <filename>nat.rules</filename></screen></sidebar>
+          <para>通常情况下，像这样的一行命令，我们基本上只用command标签。在这里只是想用一个例子来说明这些inline的元素。类似这样的标签，还有数据库database、函数function、选项option、参数parameter等等。 </para>
+        </sect3>
+      
+        <sect3><title>admonitions</title>
+          <para>admonitions是一种较为醒目的提醒类信息，一共有5个标签， caution, important, note, tip, 和warning。在前面，已经有过一个tip的例子。下面我再看一个warning的例子，我们如果有如下的一段代码：</para>
+          <screen>&lt;warning&gt;请小心使用iptables-save命令。&lt;/warning&gt;</screen>
+          <para>那么就会得到如下的显示样式:</para>
+          <sidebar><warning>请小心使用iptables-save命令。</warning></sidebar>
+        </sect3>
+        
+        <sect3><title>Line-specific environments</title>
+          <para>这个具体怎么翻译我还真拿不准，就不翻译了。这类标签不算多，大概7到8个的样子。用一个例子来说明吧。比如，我们有一个屏幕上的输出内容，想直接呈现给读者，就像前面的<command>tree fisrtbook</command>输出，我们可以使用screen标签，如下：</para>
+          <programlisting linenumbering="numbered" language="common">&lt;screen&gt;
+chunxin@CC$ tree firstbook/
+firstbook/
+├── chapters
+│   ├── chapter01_beginning.xml
+│   ├── chapter02_xml.xml
+│   ├── chapter03_xsl.xml
+│   └── chapter04_fonts.xml
+├── firstbook.xml
+├── colophon.xml
+├── info.xml
+└── preface.xml
+&lt;/screen&gt;</programlisting>
+          <para>那么显示出来，就是如下的样子：</para>
+          <sidebar>
+          <screen>chunxin@CC$ tree firstbook/
+firstbook/
+├── chapters
+│   ├── chapter01_beginning.xml
+│   ├── chapter02_xml.xml
+│   ├── chapter03_xsl.xml
+│   └── chapter04_fonts.xml
+├── firstbook.xml
+├── colophon.xml
+├── info.xml
+└── preface.xml</screen></sidebar>
+          <para>显示的结果就感觉像是直接搬用了屏幕上的输出一样，让人一看就能明白。类似的标签还有programlisting, synopsis等。</para>
+        </sect3>
+        
+        
+        <sect3><title>callout</title>
+           <para>可以理解为一种标记注释，经常与Line-specific environments类的元素配合使用，例如我们有一段关于<filename>rsyslog.conf</filename>的配置文件，内容如下：</para>
+           <programlisting linenumbering="numbered" language="common">...
+$WorkDirectory /var/spool/rsyslog
+
+$IncludeConfig /etc/rsyslog.d/*.conf
+
+auth,authpriv.*			/var/log/auth.log
+...</programlisting>
+           <para>为了能够清晰地向读者说明配置文件各行的作用，如果可以在需要解释的位置做一个标记，然后使用标记定位来解释相应的内容，会使读者更一目了然。就像如下的样子：</para>
+           <sidebar>
+           <programlisting linenumbering="numbered" language="common">...
+$WorkDirectory /var/spool/rsyslog <co id="WorkDirectory-co" linkends="WorkDirectory"/>
+
+$IncludeConfig /etc/rsyslog.d/*.conf <co id="IncludeConfig-co" linkends="IncludeConfig"/>
+
+auth,authpriv.*			/var/log/auth.log <co id="auth-co" linkends="auth"/>
+...</programlisting>
+
+            <calloutlist>
+              <callout arearefs="WorkDirectory-co" id="WorkDirectory">
+                <para>定义rsyslog的工作目录</para>
+              </callout>
+              <callout arearefs="IncludeConfig-co" id="IncludeConfig">
+                <para>指定rsyslog在运行时要包含哪些文件</para>
+              </callout>
+              <callout arearefs="auth-co" id="auth">
+                <para>认证类的日志存在auth.log中</para>
+              </callout>
+            </calloutlist>
+
+            </sidebar>
+            <para>要实现上面的样式，代码如下：</para>
+            <programlisting linenumbering="numbered" language="myxml"><?dbfo pgwide="0"?><textobject><textdata  fileref="sources/callout.txt"/></textobject></programlisting>
+        </sect3>
+      
+       
+        
+    </sect2>
+  
+
+    
+  </sect1>
+    
+
+</chapter>

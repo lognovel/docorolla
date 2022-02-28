@@ -1,0 +1,18 @@
+<chapter><title>制作第一份docbook文档</title>
+  <para>前面已经提到过，docbook主要分为SGML和XML两个版本，... ...</para>
+  <para>docbook的入门是有一定门槛的，... ...</para>
+  <orderedlist>
+    <listitem><emphasis>XML文档</emphasis>
+      <para>首先，需要按照docbook DTD的规范要求，... ...</para>
+    </listitem>
+    <listitem><emphasis>XSL样式表</emphasis>
+      <para>有了docbook格式的xml文件之后，... ...</para>
+    </listitem>
+    <listitem><emphasis>字体</emphasis>
+      <para>有几种类型的字体需要我们提前准备好主要包括sans、serif、monospace等。后面会有详细的介绍。</para>
+    </listitem>
+    <listitem><emphasis>处理程序</emphasis>
+      <para>有了docbook格式的文件、docbook-xsl样式表及字体，... ...</para>
+    </listitem>
+  </orderedlist> 
+</chapter>

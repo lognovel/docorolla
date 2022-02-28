@@ -1,0 +1,97 @@
+<chapter><title>字体</title>
+  <para>刚开始使用docbook时，我对字体一无所知。为了能让文档看上去更舒服、更能让人一目了然。就对字体做了一个简单的了解。把我学习到的如何在docbook中使用字体的经验在此做个分享。</para>
+  <sect1><title>字体简介</title>
+  
+    <sect2><title>字体类型</title>
+    <para>较为常用的字体类型是Open Type Fonts(otf)和True Type Fonts(ttf)。在前面的章节中，我们下载的思源字体就是otf字体。还有一种ttc的字体文件，全称是TrueType Font Collection，是多个ttf或otf的合集。例如在windows系统使用比较多的simsun.ttc字体，里面就包含了SimSun（宋体）和NSimSun（新宋体）两个字体。</para>
+    
+    <para>在参数设置的font部分，我们提到过字体的设置。有三种字体需要我们设置：serif，sans-serif和monospace。不仅仅是在docbook中，其实在每个操作系统里面也都有这三个设置。</para>
+    <orderedlist>
+      <listitem><emphasis>serif</emphasis>
+        <para>衬线字体，一般是在笔画的开始或结束的地方有个装饰，在汉字里面，宋体是比较典型的serif，在英文里常用的是Times New Roman字体。serif的易读性较好。通常文章的正文使用serif字体，这可增加易读性。</para>
+      </listitem>
+      
+      <listitem><emphasis>sans-serif</emphasis>
+        <para>非衬线字体，有的地方也写做sans。这种字体的特点是衡平竖直的，笔画的粗细基本都一样。在汉字里，黑体、隶书等是比较典型的sans-serif，在英文里Arial、Helvetica属于sans。sans适合做文档的标题。</para>
+      </listitem>
+      
+      <listitem><emphasis>monospace</emphasis>
+        <para>等宽字体，从某种意义上说，monospace也算是sans的一种，除了笔画粗细都一样之外，每个字的字符宽度也都一样。等宽字体主要用在代码上，主要的作用就是容易排列整齐。</para>
+      </listitem>
+    
+    </orderedlist>
+    
+    <para>如果我们手头有杂志或报纸的话，他们的标题基本上都是非衬线字体（黑体居多），而正文基本都是衬线字体（宋体居多），我们的电脑里的终端程序，里面显示的就是等宽字体。对于一份技术性文档来说，有了这三种字体就基本够用了。</para>  
+    
+    </sect2>
+    
+    <sect2><title>字体样式</title>
+
+<para>一款字体的选择，外观的样貌还是最重要的。另外，还有一点要考虑，这是我自己的感受。就是这款字体是否还具备粗体、斜体及粗斜体。在样式表或我们经常使用的网页的CSS中，一款字体通常有如下的三元组：</para>
+    <orderedlist>
+      <listitem><emphasis>name</emphasis>
+        <para>对于ttf和otf类型的字体文件来说，一个字体文件里只含有一款字体，使用任何的字体查看软件<footnote><para>在linux环境下，可以使用gnome-font-viewer或font-viewer来查看字体。</para></footnote>都可以知道它的正式的名称，如下图，使用gnome-font-viewer查看SourceHanSansCN-Normal.otf字体：</para>
+        <figure pgwide="0"><title>字体查看</title><graphic fileref="images/font_viewer.png" width="260px"/></figure>
+        <para>可以看出，字体的正式名称是“Source Han Sans CN”。</para>
+      </listitem>
+      <listitem><emphasis>style</emphasis>
+        <para>通常，style是指的是正体（normal）还是斜体（italic）。</para>
+      </listitem>
+      <listitem><emphasis>weight</emphasis>
+        <para>通常，weight是指得是正常大小（normal）还是粗体（bold）。这个在有些地方也用数字表示，400代表normal，700代表bold。Source Han字体有7个weight值。</para>
+      </listitem>
+    </orderedlist>
+    <para>在一个比较完美的情况下，一个字体在style方面要能提供normal和italic，在weight方面能提供normal和bold。一个字体应该有如下的可供选择的组合：</para>
+    <screen>name = "font name"  style = "normal"  weight="normal"
+name = "font name"  style = "normal"  weight="bold"
+name = "font name"  style = "italic"  weight="normal"
+name = "font name"  style = "italic"  weight="bold"</screen>
+    <para>也就是平时经常说到的：normal, bold, italic, bold italic。但是大部分情况，很多字体好像只提供了style=normal，bold=normal</para>
+
+    </sect2>
+  </sect1>
+
+
+  <sect1><title>字体选择</title>
+    
+    <orderedlist>
+      <listitem><emphasis>serif</emphasis>
+        <para>在serif字体的选择上，可能最普遍的是用simsun字体，在正文部分使用simsun字体是不错的选择。每台windows的fonts目录里都有这款字体。但它的粗体在fop将文档转换为pdf的时候似乎并不美观。simsun属于商业字体。</para>
+        <para>另外一个选择就是前面我们下载的source-han-serif。</para>
+      </listitem>
+      
+      <listitem><emphasis>sans-serif</emphasis>
+        <para>非衬线字体，文泉驿正黑、SimHei及微软雅黑等都属于这一类。可以根据自己的喜好来选择。SimHei和微软雅黑与simsun一样，属于商业字体，在正式场合使用的时候要注意版权问题。</para>
+        <para>另外一个选择就是前面我们下载的source-han-sans。</para>
+      </listitem>
+      
+      <listitem><emphasis>monospace</emphasis>
+        <para>等宽字体，文泉驿微米黑属于这一类。当然，也可以从自己的操作系统中寻找合适的等宽字体。对于等宽字体，我还是非常推荐source-han-mono的。</para>
+      </listitem>
+    
+    </orderedlist>
+    <para>整体上来说，还是比较推荐Source Han字体，有以下几个原因：</para>
+    <orderedlist>
+      <listitem><emphasis>版权问题</emphasis>
+        <para>Source Han字体是aodbe赞助，完全开源的字体。google的noto字体就是在这基础上做的。</para>
+      </listitem>
+      
+      <listitem><emphasis>设计美观</emphasis>
+        <para>Source Han的设计团队比较强大。字形设计还是非常不错的，特别是sans部分，和其他的黑体比较起来，我感觉非常好看，非常适合作为标题的字体。</para>
+      </listitem>
+      
+      <listitem><emphasis>尺寸多</emphasis>
+        <para>weight值一共有七个。</para>
+      </listitem>
+      
+      <listitem><emphasis>字形也较全</emphasis>
+        <para>mono字体的粗斜全都有了。</para>
+      </listitem>
+    </orderedlist>
+    
+  </sect1>
+  
+  <!-- sect1><title>字体配置</title>
+    <para>字体的配置主要是在fop.conf和param.xsl中，substitution</para>
+  </sect1 -->
+</chapter>

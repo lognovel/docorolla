@@ -1,0 +1,58 @@
+<t:titlepage t:element="book" t:wrapper="fo:block">
+    <t:titlepage-content t:side="recto">
+      <mediaobject/>
+      <title
+             t:named-template="division.title"
+             param:node="ancestor-or-self::book[1]"
+             text-align="left"
+             font-size="&hsize5;"
+             space-before="&hsize5space;"
+             font-weight="normal"
+             font-family="{$title.fontset}"/>      
+      <subtitle
+             text-align="left"
+             font-size="&hsize2;"
+             font-weight="normal"
+             space-before="&hsize4space;"
+             font-family="{$title.fontset}"/>  
+      <corpauthor font-size="&hsize0;"
+             text-align="left"
+             font-weight="normal" 
+             keep-with-next.within-column="always"
+             space-before="2in"/>  
+      <authorgroup space-before="2in"/>
+      <author font-size="&hsize0;"
+             text-align="left"
+             font-weight="normal" 
+             space-before="&hsize2space;"
+             keep-with-next.within-column="always"/> 
+      <itermset/>
+    </t:titlepage-content>
+
+  <t:titlepage-content t:side="verso">
+      <title
+             t:named-template="book.verso.title"
+             font-size="&hsize2;"
+             font-weight="bold"
+             font-family="{$title.fontset}"/>
+      <corpauthor/>
+      <authorgroup t:named-template="verso.authorgroup"/>
+      <author/>
+
+      <othercredit/>
+      <copyright/>
+      <pubdate/> 
+      <releaseinfo/>         
+      <revhistory/>       
+      <abstract/>
+      <legalnotice font-size="7pt" background-color="#f5f5f5" space-before="1em"/>
+  </t:titlepage-content>
+  <t:titlepage-separator>
+      <fo:block break-after="page"/>
+  </t:titlepage-separator>
+  <t:titlepage-before t:side="recto">
+  </t:titlepage-before>
+  <t:titlepage-before t:side="verso">
+      <fo:block break-after="page"/>
+  </t:titlepage-before>
+</t:titlepage>

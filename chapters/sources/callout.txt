@@ -1,0 +1,19 @@
+<programlisting linenumbering="numbered" language="common">...
+$WorkDirectory /var/spool/rsyslog <co id="WorkDirectory-co" linkends="WorkDirectory"/>
+
+$IncludeConfig /etc/rsyslog.d/*.conf <co id="IncludeConfig-co" linkends="IncludeConfig"/>
+
+auth,authpriv.*	 /var/log/auth.log <co id="auth-co" linkends="auth"/>
+...</programlisting>
+
+<calloutlist>
+  <callout arearefs="WorkDirectory-co" id="WorkDirectory">
+    <para>定义rsyslog的工作目录</para>
+  </callout>
+  <callout arearefs="IncludeConfig-co" id="IncludeConfig">
+    <para>指定rsyslog在运行时要包含哪些文件</para>
+  </callout>
+  <callout arearefs="auth-co" id="auth">
+    <para>认证类的日志存在auth.log中</para>
+  </callout>
+</calloutlist>

@@ -1,0 +1,100 @@
+<preface><title>前言</title>
+  <sect1><title>排版约定</title>
+
+  <para>本手册使用下列排版约定。</para>
+  <orderedlist>
+    <listitem><para><emphasis>字体约定</emphasis>，为了更为清晰地、区别于正文地展示一些系统命令、程序代码等文档元素，对这些内容采用与正文有区别的字体样式：</para>
+      <orderedlist>
+        <listitem><para>等宽字体：表示程序片段，以及正文中出现的配置选项、变量、函数名等，我们采用如下的样式显示：<option>serverip</option>。</para>     
+        </listitem>
+        
+        <listitem><para>等宽加粗字体：表示由用户输入的系统命令。例如，用户创建一个目录的命令，用如下的样式来显示：<command>mkdir mybook</command>。</para>
+        </listitem>
+      
+        <listitem><para>等宽斜体：表示由用户输入的值或是一些需要设定的参数的值，例如，用户设定一个ip地址，用如下的样式显示：<userinput>192.168.1.2</userinput>。</para>
+        </listitem>
+        
+        <listitem><para>等宽加粗斜体字体：表示文件名、数据库名及新的术语等。例如，文件的名称用如下的样式来显示：<filename>myfirst.xml</filename>。</para>
+        </listitem>
+      </orderedlist>
+    </listitem>
+    
+    <listitem><para><emphasis>提示、告诫类信息</emphasis>（admonitions），一共有5种，分别为：</para>
+      <itemizedlist>
+        <listitem>
+          <tip><para>这种样式表示一种提示类的信息。</para></tip>
+        </listitem>
+        
+        <listitem>
+          <note><para>这种样式代表一种技巧或是小窍门。</para></note>
+        </listitem>
+    
+        <listitem>
+          <important><para>这种样式代表重要的信息。</para></important>
+        </listitem>
+      
+        <listitem>
+          <caution><para>这种样式代表需要仔细注意的信息。</para></caution>
+        </listitem>
+       
+        <listitem>
+          <warning><para>这种样式代表警告信息。</para></warning>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    
+     <listitem><para><emphasis>程序代码及屏幕内容</emphasis>：</para>
+      <itemizedlist>
+        <listitem><para>有时候我们需要整块显示在屏幕上输出的内容，或者是键入的命令。例如，在linux下，我们使用<command>ifconfig eth0</command>命令来查网络接口信息：</para>
+          <screen>$ ifconfig eth0
+eth0: flags=4099&lt;UP,BROADCAST,MULTICAST&gt;  mtu 1500
+        ether 98:fa:9b:db:b9:9f  txqueuelen 1000  (以太网)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 16  memory 0xea300000-ea320000</screen>
+        </listitem>
+        
+        <listitem>
+          <para>对于一些程序代码，使用带有序号的样式来展示，例如，一段php代码：</para>
+          <programlisting linenumbering="numbered" language="myxml">&lt;?php
+  class SimpleBook {
+    private $title;
+    
+    function __construct($title_in) {
+      $this->title  = $title_in;
+    }
+
+    function getTitle() {return $this->title;}
+  }
+?&gt;</programlisting>
+        </listitem>
+    
+      
+      </itemizedlist>
+    </listitem>  
+  </orderedlist>    
+  
+  </sect1>
+  
+  <sect1><title>相关资源</title>
+    <para>docbook 5：<link xlink:href="https://tdg.docbook.org/tdg/5.0/docbook.html"></link></para>
+    <para>docbook params：<link xlink:href="http://docbook.sourceforge.net/release/xsl/current/doc/"></link></para>
+    <para>docbook xsl：<link xlink:href="http://www.sagehill.net/docbookxsl/index.html"></link></para>
+    <para>还有如下一些非常有价值的站点供参考：</para>
+    <para><link xlink:href="https://docbook.org/"></link></para>
+    <para><link xlink:href="http://docbook.sourceforge.net/"></link></para>
+    <para><link xlink:href="https://cdn.docbook.org/"></link></para>
+    <para><link xlink:href="https://cdn.docbook.org/"></link></para>
+    <para><link xlink:href="https://github.com/docbook"></link></para>
+    
+    
+    
+    
+  </sect1>
+
+
+
+
+</preface>
