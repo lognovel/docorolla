@@ -1,27 +1,34 @@
 <info>
   <mediaobject><imageobject> <imagedata fileref="images/docorolla_logo_title.svg"/></imageobject></mediaobject>
-  <corpauthor>上海榄果数字科技有限公司</corpauthor>
-  <author><firstname>ChunXin</firstname><surname>Li</surname>
+  <corpauthor>docorolla.io</corpauthor>
+  <author><firstname>Li </firstname><surname>ChunXin</surname>
            <email>chunxin@lognovel.com</email>
   </author>
   
   <copyright>
-    <year>2021</year>
-    <holder>（著作权）ChunXin Li</holder>       
+    <year>2021-2022</year>
+    <holder>Li ChunXin</holder>       
   </copyright>
-  <pubdate>2021年9月30日 </pubdate>
-  <releaseinfo><para>This document was generated at <?dbtimestamp format="Y-m-d H:M:S"?> by dogen . chunxin @ lognovel.com or 484299@ qq.co m </para></releaseinfo>
+  <pubdate>发行日期：2022年5月27日 </pubdate>
+  <releaseinfo><para>This document was generated at <?dbtimestamp format="H:M:S"?> on <?dbtimestamp format="Y-m-d"?> by docorolla . chunxin @ lognovel.com or 484299@ qq.co m </para></releaseinfo>
 
   <revhistory>
+  
      <revision>
         <revnumber>1.0</revnumber>
+        <date>2022年5月26日</date>
+        <authorinitials>chunxin <email>484299 @ qq .com</email></authorinitials>
+        <revremark>docorolla</revremark>
+     </revision>
+     <revision>
+        <revnumber>0.2</revnumber>
         <date>2021年9月30日</date>
         <authorinitials>chunxin <email>484299 @ qq .com</email></authorinitials>
         <revremark>基本完稿</revremark>
      </revision>
 
      <revision>
-        <revnumber>1.0</revnumber>
+        <revnumber>0.1</revnumber>
         <date>2021年9月12日</date>
         <authorinitials>chunxin <email>484299 @ qq .com</email></authorinitials>
         <revremark>发布第一个Draft</revremark>
@@ -29,13 +36,14 @@
   </revhistory>
   
   <abstract><title>摘要</title>
+    <para>docorolla是一个项目。是帮助您如何制作优秀的技术类文档的项目。 目前处于文档阶段，在这份文档中，您可以学会如何利用docbook标准及相应的程序、字体和样式，去创作和发行自己的文档。</para>
     <para>docbook是一套非常流行的文档标准。在IT行业，有大量的开源社团在使用，包括Fedora、OpenSUSE、Gnome、OpenStack等。也有很多商业性的公司在使用，如IBM、Oracle、Cisco等。docbook具有丰富的标签，几乎涵盖了出版一本专业的技术书籍（特别是计算机类的书籍）所需要的所有元素。使用docbook技术，会使我们制作的技术类书籍更为专业，在版式方面更容易让读者阅读。</para><para>我们发现了docbook在书写技术文档方面的能力，不仅仅是它具有丰富、人性化的标签，其在多人协作等方面也令人满意。于是我们把一些微不足道的经验分享出来，以飨读者。如果您有任何的意见和想法请告知我们，任何的建议都弥足珍贵。</para><para>这份手册就是由docbook及相关工具来完成的。</para>
 
   </abstract>
 
   <legalnotice>
       <para><emphasis>版权声明</emphasis></para>
-      <para>本作品由lognovel团队完成，并声明以Creative Commons license (CC BY-NC-SA 4.0)许可发行。CC许可已于2006年在中国大陆地区由相关部门完成本地化。即您可以自由地：</para>
+      <para>本作品由声明以Creative Commons license (CC BY-NC-SA 4.0)许可发行。CC许可已于2006年在中国大陆地区由相关部门完成本地化。即您可以自由地：</para>
       <blockquote>
       <itemizedlist>
         <listitem>共享 — 在任何媒介以任何形式复制、发行本作品</listitem>
@@ -52,10 +60,10 @@
       
       <para><link xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">更多许可信息请参照此链接：</link></para>
 
-      <para><emphasis>商标声明</emphasis></para>
-      <para><trademark class='registered'>lognovel</trademark>为上海榄果数字科技有限公司的注册商标，在未经上海榄果数字科技有限公司的许可下，任何个人或机构不得使用。</para>  
+      <!-- para><emphasis>商标声明</emphasis></para>
+      <para><trademark class='registered'>lognovel</trademark>为docorolla.io的注册商标，在未经docorolla.io的许可下，任何个人或机构不得使用。</para>  
       <para><emphasis>Trademarks</emphasis></para>
-      <para><trademark class='registered'>lognovel</trademark>logo is registered trademarks of lognovel Ltd.  <trademark class='registered'>PostScript</trademark> and <trademark class='registered'>PDF</trademark> are registered trademarks of Adobe Systems,Inc. <trademark class='registered'>Nginx</trademark> is registered trademarks of F5,Inc. Other trademarks mentioned in this document are the property of their respective owners.</para> 
+      <para><trademark class='registered'>lognovel</trademark>logo is registered trademarks of lognovel Ltd.  <trademark class='registered'>PostScript</trademark> and <trademark class='registered'>PDF</trademark> are registered trademarks of Adobe Systems,Inc. <trademark class='registered'>Nginx</trademark> is registered trademarks of F5,Inc. Other trademarks mentioned in this document are the property of their respective owners.</para --> 
     </legalnotice>
  
 </info>
