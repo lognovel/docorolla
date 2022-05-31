@@ -1,5 +1,5 @@
-<book><title>⽂档的艺术</title>
-  <subtitle>docbook简要参考⼿册<标签、样式及处理程序></subtitle>
+<book><title>docbook简要参考⼿册</title>
+  <subtitle>Technical Document Authoring and Publishing Suite</subtitle>
   
   <chapter><title>制作第⼀份docbook⽂档</title>
     <para>前面已经提到过，docbook主要分为SGML和XML两个版本，不论哪个版本，都称为DocbookDTD... ...</para>

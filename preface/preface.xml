@@ -16,8 +16,8 @@
 
   <sect1><title>docbook简介</title>
     <para>通俗点讲，docbook其实算是一种标记语言，与html有点类似，就是使用一些标记，把文档整理、组织在一起，如下所示：</para>
-    <screen>&lt;book&gt;&lt;title&gt;文档的艺术&lt;/title&gt;  
-    &lt;subtitle&gt;docbook简要参考⼿册&lt;标签、样式及处理程序&gt;&lt;/subtitle&gt;
+    <screen>&lt;book&gt;&lt;title&gt;docbook简要参考⼿册&lt;/title&gt;  
+    &lt;subtitle&gt;Technical Document Authoring and Publishing Suite&lt;/subtitle&gt;
          ... ...</screen>
     <para>当这些文字被一些固定的标签整理和组织以后，在计算机里就很容易根据不同的标签做不同的处理。其中比较常见的一种应用就是对不同标签的内容按照相应的样式进行显示。docbook，本质上就是一组标签的集合，而且是专门针对制作“书籍”的标签集合。</para>
     <para>docbook实际上是一种规范、一种标准，在这种规范或标准里规定了有哪些标签可以使用。就像html规范里，有&lt;head&gt;、&lt;div&gt;、&lt;body&gt;等标签一样。docbook主要分为SGML和XML两个版本，目前由OASIS<footnote><para>OASIS：Organization for the Advancement of Structured Information Standards，结构化信息标准促进组织，是一个推进电子商务标准的发展、融合与采纳的非盈利性国际化组织。自1993年成立开始，OASIS已经发展成为了由来自100多个国家的600多家组织、企业，参与人数超过5000人的国际化组织。</para></footnote>的docbook技术委员会来维护。</para>
